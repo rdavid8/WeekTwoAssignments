@@ -55,11 +55,21 @@ class API
         case 200...299:
             JSONParser.tweetJSONFrom(data, completion: { (success, tweets) -> () in
                 NSOperationQueue.mainQueue().addOperationWithBlock ({ completion(tweets: tweets) })
+<<<<<<< HEAD
             })
         case 300...400:
             print("Bad Request")
         case 400...500:
             print("Internal Server Error")
+=======
+     
+            
+            })
+        case 400...500:
+            print("Bad Request")
+        case 500...600:
+            print("Server Error")
+>>>>>>> Tuesday
         default: break
             }
         }
@@ -98,6 +108,7 @@ class API
            
         }
         
+<<<<<<< HEAD
 
     }
 
@@ -136,4 +147,13 @@ class API
 //        }
 //    
 //    }
+=======
+   
+        
+        
+        
+    }
+
+    
+>>>>>>> Tuesday
 }
