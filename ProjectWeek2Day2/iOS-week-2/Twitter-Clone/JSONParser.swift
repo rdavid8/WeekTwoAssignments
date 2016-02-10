@@ -14,7 +14,19 @@ class JSONParser
 {
     class func tweetJSONFrom(data: NSData, completion: JSONParserCompletion)
     {
+<<<<<<< HEAD
+//        let serializationQ = dispatch_queue_create("serializationQ", nil)
+//        dispatch_async(serializationQ) { () -> Void in
+//            //do your business here...
+//            
+//        dispatch_async(dispatch_get_main_queue(), { () -> Void in
+//            //call the completion here...
+//            })
+//        }
+//        
+=======
         
+>>>>>>> Tuesday
         NSOperationQueue().addOperationWithBlock { () -> Void in
         
         do {
@@ -62,11 +74,11 @@ class JSONParser
 
     // Mark: first day, load JSON from bundle.
     
-    class func JSONData() -> NSData
-    {
-        guard let tweetJSONPath = NSBundle.mainBundle().URLForResource("tweet", withExtension: "json") else {
-            fatalError("Missing tweet.json file") }
-        guard let tweetJSONData = NSData(contentsOfURL: tweetJSONPath) else { fatalError("Error creating NSData object.") }
-        return tweetJSONData
-    }
+//    class func JSONData() -> NSData
+//    {
+//        guard let tweetJSONPath = NSBundle.mainBundle().URLForResource("tweet", withExtension: "json") else {
+//            fatalError("Missing tweet.json file") }
+//        guard let tweetJSONData = NSData(contentsOfURL: tweetJSONPath) else { fatalError("Error creating NSData object.") }
+//        return tweetJSONData
+//    }
 }

@@ -53,9 +53,15 @@ class API
         
         switch response.statusCode {
         case 200...299:
-        
             JSONParser.tweetJSONFrom(data, completion: { (success, tweets) -> () in
                 NSOperationQueue.mainQueue().addOperationWithBlock ({ completion(tweets: tweets) })
+<<<<<<< HEAD
+            })
+        case 300...400:
+            print("Bad Request")
+        case 400...500:
+            print("Internal Server Error")
+=======
      
             
             })
@@ -63,6 +69,7 @@ class API
             print("Bad Request")
         case 500...600:
             print("Server Error")
+>>>>>>> Tuesday
         default: break
             }
         }
@@ -101,6 +108,46 @@ class API
            
         }
         
+<<<<<<< HEAD
+
+    }
+
+//    
+//func GETOAuthUser(completion: (user: User?) -> ())
+//{
+//    let request = SLRequest(forServiceType: SLServiceTypeTwitter, requestMethod: .GET, URL: NSURL(string: "https://api.twitter.com/1.1/account/verify_credentials.json"), parameters: nil)
+//    
+//    request.account = self.account
+//    request.performRequestWithHandler { (data, response, error) -> Void in
+//        
+//        if let _ = error {
+//        NSOperationQueue.mainQueue().addOperationWithBlock{ completion(user: nil) }
+//        return
+//        }
+//        
+//        switch response.statusCode {
+//        case 200...299:
+//            
+//            do {
+//                if let userJSON = try NSJSONSerialization.JSONObjectWithData(data, options: .MutableContainers) as? [String: AnyObject] {
+//                    
+//                    NSOperationQueue.mainQueue().addOperationWithBlock( { () -> Void in
+//                        completion(user: JSONParser.userFromTweetJSON(userJSON))
+//                })
+//                }
+//            } catch _ {}
+//            
+//        case 300...400:
+//            print("Bad Request")
+//        case 400...500:
+//            print("Internal Server Error")
+//        default: break
+//         
+//            }
+//        }
+//    
+//    }
+=======
    
         
         
@@ -108,4 +155,5 @@ class API
     }
 
     
+>>>>>>> Tuesday
 }

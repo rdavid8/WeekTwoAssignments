@@ -46,6 +46,8 @@ class HomeViewController: UIViewController, UITableViewDataSource
     
     func update()
     {
+   
+            
         
         API.shared.login { (accounts) -> () in
             if let accounts = accounts {
@@ -73,9 +75,15 @@ class HomeViewController: UIViewController, UITableViewDataSource
             self.presentViewController(alertView, animated: true, completion: nil)
             }
         
+<<<<<<< HEAD
+        }   
+
+        
+=======
         }
 
 
+>>>>>>> Tuesday
     }
 }
 
