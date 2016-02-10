@@ -14,14 +14,6 @@ class JSONParser
 {
     class func tweetJSONFrom(data: NSData, completion: JSONParserCompletion)
     {
-        let serializationQ = dispatch_queue_create("serializationQ", nil)
-        dispatch_async(serializationQ) { () -> Void in
-            //do your business here...
-            
-        dispatch_async(dispatch_get_main_queue(), { () -> Void in
-            //call the completion here...
-            })
-        }
         
         NSOperationQueue().addOperationWithBlock { () -> Void in
         
