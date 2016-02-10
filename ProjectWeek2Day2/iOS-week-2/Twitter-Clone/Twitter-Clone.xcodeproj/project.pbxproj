@@ -7,6 +7,10 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		0B8B2B341C6BB78500087DE6 /* ProfileViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0B8B2B331C6BB78500087DE6 /* ProfileViewController.swift */; };
+		0B8B2B361C6BB7D800087DE6 /* Identity.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0B8B2B351C6BB7D800087DE6 /* Identity.swift */; };
+		0B8B2B381C6BBBF100087DE6 /* DetailViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0B8B2B371C6BBBF100087DE6 /* DetailViewController.swift */; };
+		0B8B2B3C1C6BE7DA00087DE6 /* PlaceHolder.png in Resources */ = {isa = PBXBuildFile; fileRef = 0B8B2B3B1C6BE7DA00087DE6 /* PlaceHolder.png */; };
 		AFC3799C1C693A77007846BA /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = AFC3799B1C693A77007846BA /* AppDelegate.swift */; };
 		AFC379A11C693A77007846BA /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = AFC3799F1C693A77007846BA /* Main.storyboard */; };
 		AFC379A31C693A77007846BA /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = AFC379A21C693A77007846BA /* Assets.xcassets */; };
@@ -20,6 +24,10 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		0B8B2B331C6BB78500087DE6 /* ProfileViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ProfileViewController.swift; sourceTree = "<group>"; };
+		0B8B2B351C6BB7D800087DE6 /* Identity.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = Identity.swift; path = ../Identity.swift; sourceTree = "<group>"; };
+		0B8B2B371C6BBBF100087DE6 /* DetailViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DetailViewController.swift; sourceTree = "<group>"; };
+		0B8B2B3B1C6BE7DA00087DE6 /* PlaceHolder.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = PlaceHolder.png; path = ../PlaceHolder.png; sourceTree = "<group>"; };
 		AFC379981C693A77007846BA /* Twitter-Clone.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "Twitter-Clone.app"; sourceTree = BUILT_PRODUCTS_DIR; };
 		AFC3799B1C693A77007846BA /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		AFC379A01C693A77007846BA /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main.storyboard; sourceTree = "<group>"; };
@@ -78,6 +86,7 @@
 		AFC379AD1C693AA2007846BA /* View */ = {
 			isa = PBXGroup;
 			children = (
+				0B8B2B3B1C6BE7DA00087DE6 /* PlaceHolder.png */,
 				AFC379A71C693A77007846BA /* Info.plist */,
 				AFC379A41C693A77007846BA /* LaunchScreen.storyboard */,
 				AFC3799F1C693A77007846BA /* Main.storyboard */,
@@ -109,6 +118,7 @@
 			children = (
 				AFC379BA1C693BB7007846BA /* Tweet.swift */,
 				AFC379B61C693B49007846BA /* User.swift */,
+				0B8B2B351C6BB7D800087DE6 /* Identity.swift */,
 			);
 			name = Model;
 			sourceTree = "<group>";
@@ -117,6 +127,8 @@
 			isa = PBXGroup;
 			children = (
 				AFC379BC1C693CC8007846BA /* HomeViewController.swift */,
+				0B8B2B331C6BB78500087DE6 /* ProfileViewController.swift */,
+				0B8B2B371C6BBBF100087DE6 /* DetailViewController.swift */,
 			);
 			name = Controller;
 			sourceTree = "<group>";
@@ -182,6 +194,7 @@
 				AFC379A61C693A77007846BA /* LaunchScreen.storyboard in Resources */,
 				AFC379A31C693A77007846BA /* Assets.xcassets in Resources */,
 				AFC379A11C693A77007846BA /* Main.storyboard in Resources */,
+				0B8B2B3C1C6BE7DA00087DE6 /* PlaceHolder.png in Resources */,
 				AFC379AF1C693ADD007846BA /* tweet.json in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -193,10 +206,13 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				0B8B2B381C6BBBF100087DE6 /* DetailViewController.swift in Sources */,
 				AFCE5FE91C6A60DD0005EC26 /* Api.swift in Sources */,
 				AFC379BD1C693CC8007846BA /* HomeViewController.swift in Sources */,
 				AFC379BB1C693BB7007846BA /* Tweet.swift in Sources */,
+				0B8B2B361C6BB7D800087DE6 /* Identity.swift in Sources */,
 				AFC3799C1C693A77007846BA /* AppDelegate.swift in Sources */,
+				0B8B2B341C6BB78500087DE6 /* ProfileViewController.swift in Sources */,
 				AFC379B71C693B49007846BA /* User.swift in Sources */,
 				AFC379B21C693B13007846BA /* JSONParser.swift in Sources */,
 			);

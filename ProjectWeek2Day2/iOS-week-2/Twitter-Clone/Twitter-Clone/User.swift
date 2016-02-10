@@ -17,7 +17,7 @@ class User
     
     init(name: String, profileImageUrl: String, location: String)
     {
-        self.name = name
+        self.name = "@\(name)"
         self.profileImageUrl = profileImageUrl
         self.location = location
     }

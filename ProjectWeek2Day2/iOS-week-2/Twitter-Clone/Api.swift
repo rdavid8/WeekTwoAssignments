@@ -57,7 +57,6 @@ class API
                 JSONParser.tweetJSONFrom(data, completion: { (success, tweets) -> () in
                     NSOperationQueue.mainQueue().addOperationWithBlock ({ completion(tweets: tweets) })
                     
-                    
                 })
             case 400...500:
                 print("Bad Request")
@@ -107,6 +106,43 @@ class API
         
     }
     
+    func getUserData(completion:(user: User?)->()) {
+        
+    let url = "https://api.twitter.com/1.1/account/verify_credentials.json"
+        
+       let request = SLRequest(forServiceType: SLServiceTypeTwitter, requestMethod: .GET, URL: NSURL(string: url), parameters: nil)
+        
+       request.account = self.account
+        
+        request.performRequestWithHandler { (data, response, error) -> Void in
+            
+            if let _ = error {
+                print("Error SLRequest type get return status code")
+                NSOperationQueue.mainQueue().addOperationWithBlock{completion(user: nil)}; return
+            }
+            
+            switch response.statusCode {
+            case 200...299:
+             
+                do{
+                    if let rootObject = try NSJSONSerialization.JSONObjectWithData(data, options: .MutableContainers) as? [String : AnyObject] {
+                        
+                        let user = JSONParser.userFromJSON(rootObject)
+                        
+                        NSOperationQueue.mainQueue().addOperationWithBlock({ () -> Void in
+                            completion(user: user)
+                        })
+                       
+                    }
+                }catch{
+                    print("ERROR")
+                }
+                
+                default:
+                    break
+            }
+        }
+    }
     
 }
 
