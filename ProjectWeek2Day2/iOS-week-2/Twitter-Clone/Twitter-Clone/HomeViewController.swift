@@ -75,17 +75,17 @@ class HomeViewController: UIViewController, UITableViewDataSource
             self.presentViewController(alertView, animated: true, completion: nil)
             }
         
-<<<<<<< HEAD
+
         }   
 
         
-=======
+
         }
 
 
->>>>>>> Tuesday
-    }
+
 }
+
 
 
 extension HomeViewController

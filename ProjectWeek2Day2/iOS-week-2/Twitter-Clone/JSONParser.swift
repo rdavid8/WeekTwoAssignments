@@ -14,7 +14,7 @@ class JSONParser
 {
     class func tweetJSONFrom(data: NSData, completion: JSONParserCompletion)
     {
-<<<<<<< HEAD
+
 //        let serializationQ = dispatch_queue_create("serializationQ", nil)
 //        dispatch_async(serializationQ) { () -> Void in
 //            //do your business here...
@@ -24,9 +24,7 @@ class JSONParser
 //            })
 //        }
 //        
-=======
-        
->>>>>>> Tuesday
+
         NSOperationQueue().addOperationWithBlock { () -> Void in
         
         do {
