@@ -46,6 +46,8 @@ class HomeViewController: UIViewController, UITableViewDataSource
     
     func update()
     {
+   
+            
         
         API.shared.login { (accounts) -> () in
             if let accounts = accounts {
@@ -71,24 +73,11 @@ class HomeViewController: UIViewController, UITableViewDataSource
             }
                 
             self.presentViewController(alertView, animated: true, completion: nil)
-    }
+            }
         
-    }
+        }   
 
-
-    func popAlertView(s1: String, s2: String) {
-    
-        let alertView = UIAlertController()
-    
-        let action = UIAlertAction(title: "", style: UIAlertActionStyle.Default) { (action) -> Void in
-            print("Test")
-        }
-    
-        alertView.addAction(action)
-    
-        self.presentViewController(alertView, animated: true, completion: nil)
-    
-    }
+        
     }
 }
 
@@ -105,6 +94,7 @@ extension HomeViewController
         
         if let user = tweet.user{
             tweetCell.detailTextLabel?.text = user.name
+            tweetCell.detailTextLabel?.textColor = UIColor.redColor()
         }
         
         return tweetCell
