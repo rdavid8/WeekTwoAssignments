@@ -24,19 +24,19 @@ class API
             self.updateTimeline(completion)
         } else {
             self.login ({ (account) -> () in
-            if let account = self.account {
-    
-                API.shared.account = account
-    
-        //Make the tweets call
-        self.updateTimeline(completion)
-        } else { print("Account is nil.") }
-
-        })
-      }
+                if let account = self.account {
+                    
+                    API.shared.account = account
+                    
+                    //Make the tweets call
+                    self.updateTimeline(completion)
+                } else { print("Account is nil.") }
+                
+            })
+        }
     }
     
-        //
+    //
     
     private func updateTimeline(completion: (tweets: [Tweet]?) -> ())
     {
@@ -44,33 +44,25 @@ class API
         
         request.account = self.account
         request.performRequestWithHandler { (data, response, error) -> Void in
-        
-            if let _ = error {
-            print("ERROR: SLRequesttyoe .GET could not be completed")
-                NSOperationQueue.mainQueue().addOperationWithBlock { completion( tweets: nil) } ; return
-                completion(tweets: nil)
-        }
-        
-        switch response.statusCode {
-        case 200...299:
-            JSONParser.tweetJSONFrom(data, completion: { (success, tweets) -> () in
-                NSOperationQueue.mainQueue().addOperationWithBlock ({ completion(tweets: tweets) })
-<<<<<<< HEAD
-            })
-        case 300...400:
-            print("Bad Request")
-        case 400...500:
-            print("Internal Server Error")
-=======
-     
             
-            })
-        case 400...500:
-            print("Bad Request")
-        case 500...600:
-            print("Server Error")
->>>>>>> Tuesday
-        default: break
+            if let _ = error {
+                print("ERROR: SLRequesttyoe .GET could not be completed")
+                NSOperationQueue.mainQueue().addOperationWithBlock { completion( tweets: nil) } ; return
+                    completion(tweets: nil)
+            }
+            
+            switch response.statusCode {
+            case 200...299:
+                
+                JSONParser.tweetJSONFrom(data, completion: { (success, tweets) -> () in
+                    NSOperationQueue.mainQueue().addOperationWithBlock ({ completion(tweets: tweets) })
+                    
+                })
+            case 400...500:
+                print("Bad Request")
+            case 500...600:
+                print("Server Error")
+            default: break
             }
         }
     }
@@ -94,66 +86,70 @@ class API
             }
             
             if granted {
-             
+                
                 if let accounts = accountStore.accountsWithAccountType(accountType) as? [ACAccount] {
                     NSOperationQueue.mainQueue().addOperationWithBlock({ () -> Void in
                         completion(accounts: accounts)
                         print("granted")
                         
                     })
-                 
+                    
                 }
             }
             
-           
+            
         }
         
-<<<<<<< HEAD
-
+        
+        
+        
+        
     }
+    
+    func getUserData(completion:(user: User?)->()) {
+        
+    let url = "https://api.twitter.com/1.1/account/verify_credentials.json"
+        
+       let request = SLRequest(forServiceType: SLServiceTypeTwitter, requestMethod: .GET, URL: NSURL(string: url), parameters: nil)
+        
+       request.account = self.account
+        
+        request.performRequestWithHandler { (data, response, error) -> Void in
+            
+            if let _ = error {
+                print("Error SLRequest type get return status code")
+                NSOperationQueue.mainQueue().addOperationWithBlock{completion(user: nil)}; return
+            }
+            
+            switch response.statusCode {
+            case 200...299:
+             
+                do{
+                    if let rootObject = try NSJSONSerialization.JSONObjectWithData(data, options: .MutableContainers) as? [String : AnyObject] {
+                        
+                        let user = JSONParser.userFromJSON(rootObject)
+                        
+                        NSOperationQueue.mainQueue().addOperationWithBlock({ () -> Void in
+                            completion(user: user)
+                        })
+                       
+                    }
+                }catch{
+                    print("ERROR")
+                }
+                
+                default:
+                    break
+            }
+        }
+    }
+    
+}
 
-//    
-//func GETOAuthUser(completion: (user: User?) -> ())
-//{
-//    let request = SLRequest(forServiceType: SLServiceTypeTwitter, requestMethod: .GET, URL: NSURL(string: "https://api.twitter.com/1.1/account/verify_credentials.json"), parameters: nil)
-//    
-//    request.account = self.account
-//    request.performRequestWithHandler { (data, response, error) -> Void in
-//        
-//        if let _ = error {
-//        NSOperationQueue.mainQueue().addOperationWithBlock{ completion(user: nil) }
-//        return
-//        }
-//        
-//        switch response.statusCode {
-//        case 200...299:
-//            
-//            do {
-//                if let userJSON = try NSJSONSerialization.JSONObjectWithData(data, options: .MutableContainers) as? [String: AnyObject] {
-//                    
-//                    NSOperationQueue.mainQueue().addOperationWithBlock( { () -> Void in
-//                        completion(user: JSONParser.userFromTweetJSON(userJSON))
-//                })
-//                }
-//            } catch _ {}
-//            
-//        case 300...400:
-//            print("Bad Request")
-//        case 400...500:
-//            print("Internal Server Error")
-//        default: break
-//         
-//            }
-//        }
-//    
-//    }
-=======
    
         
         
         
-    }
+
 
     
->>>>>>> Tuesday
-}

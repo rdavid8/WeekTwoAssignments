@@ -14,19 +14,6 @@ class JSONParser
 {
     class func tweetJSONFrom(data: NSData, completion: JSONParserCompletion)
     {
-<<<<<<< HEAD
-//        let serializationQ = dispatch_queue_create("serializationQ", nil)
-//        dispatch_async(serializationQ) { () -> Void in
-//            //do your business here...
-//            
-//        dispatch_async(dispatch_get_main_queue(), { () -> Void in
-//            //call the completion here...
-//            })
-//        }
-//        
-=======
-        
->>>>>>> Tuesday
         NSOperationQueue().addOperationWithBlock { () -> Void in
         
         do {
@@ -34,20 +21,19 @@ class JSONParser
                 as? [[String : AnyObject]] {
             
                 var tweets = [Tweet]()
-                
+                    
                     for tweetJSON in rootObject {
                         
-                        if let
-                            text = tweetJSON["text"] as? String,
-                            id = tweetJSON["id_str"] as? String,
-                            userJSON = tweetJSON["user"] as? [String: AnyObject]{
-    
-                            let user = self.userFromTweetJSON(userJSON)
-                            let tweet = Tweet(text: text, id: id, user: user)
-                                
-                            
-                            tweets.append(tweet)
+                        guard let tweet = self.tweetFromJSON(tweetJSON) else {return}
+                        
+                        
+                        
+                        if let orginal = self.originalTweet(tweetJSON) {
+                        
+                        tweet.originalTweet = orginal
                         }
+                        
+                        tweets.append(tweet)
                     }
                     
                     //completion
@@ -63,22 +49,27 @@ class JSONParser
     
     //Mark helper Functions
     
-    class func userFromTweetJSON(tweetJSON: [String: AnyObject]) -> User
+    class func userFromJSON(tweetJSON: [String: AnyObject]) -> User
     {
-        guard let name = tweetJSON["name"] as? String else { fatalError("Failed to parse the name. Something is wrong with JSON") }
+        guard let name = tweetJSON["screen_name"] as? String else { fatalError("Failed to parse the name. Something is wrong with JSON") }
         guard let profileImageUrl = tweetJSON["profile_image_url"] as? String else { fatalError("Failed to parse the profile image url. Something is wrong") }
         guard let location = tweetJSON["location"] as? String else { fatalError("Failed to parse the location. Something is wrong") }
         
         return User(name: name, profileImageUrl: profileImageUrl, location: location)
     }
-
-    // Mark: first day, load JSON from bundle.
     
-//    class func JSONData() -> NSData
-//    {
-//        guard let tweetJSONPath = NSBundle.mainBundle().URLForResource("tweet", withExtension: "json") else {
-//            fatalError("Missing tweet.json file") }
-//        guard let tweetJSONData = NSData(contentsOfURL: tweetJSONPath) else { fatalError("Error creating NSData object.") }
-//        return tweetJSONData
-//    }
-}
+    class func tweetFromJSON(json: [String: AnyObject]) ->Tweet? {
+        guard let text = json["text"] as? String else {return nil}
+        guard let id = json["id_str"] as? String else {return nil}
+        guard let userJSON = json["user"] as? [String : AnyObject] else{return nil}
+        
+        return Tweet(text: text, id: id, user: self.userFromJSON(userJSON), originalTweet: nil)
+    }
+    
+    class func originalTweet(tweetJSON: [String: AnyObject]) -> Tweet? {
+        guard let retweetObject = tweetJSON["retweeted_status"] as? [String : AnyObject] else { return nil }
+        guard let tweet = self.tweetFromJSON(retweetObject) else {fatalError("")}
+        return tweet
+    }
+
+ }

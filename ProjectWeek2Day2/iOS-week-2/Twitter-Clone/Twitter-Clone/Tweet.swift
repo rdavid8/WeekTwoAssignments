@@ -14,10 +14,13 @@ class Tweet
     let id: String
     let user: User?
     
-    init(text: String, id: String, user: User? = nil)
+    var originalTweet: Tweet?
+    
+    init(text: String, id: String, user: User? = nil, originalTweet: Tweet? = nil)
     {
         self.text = text
         self.id = id
         self.user = user
+        self.originalTweet = originalTweet
     }
 }
