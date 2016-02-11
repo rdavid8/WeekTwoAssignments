@@ -148,7 +148,7 @@
                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="" textAlignment="center" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="IKp-OA-bDz">
                                 <rect key="frame" x="40" y="250" width="520" height="100"/>
                                 <constraints>
-                                    <constraint firstAttribute="height" constant="100" id="oq2-v6-Blf"/>
+                                    <constraint firstAttribute="height" relation="greaterThanOrEqual" constant="100" id="oq2-v6-Blf"/>
                                 </constraints>
                                 <fontDescription key="fontDescription" name="CourierNewPSMT" family="Courier New" pointSize="20"/>
                                 <nil key="highlightedColor"/>
