@@ -48,6 +48,8 @@ class HomeViewController: UIViewController, UITableViewDataSource
         self.tableView.dataSource = self
         self.tableView.estimatedRowHeight = 200
         self.tableView.rowHeight = UITableViewAutomaticDimension
+        self.tableView.separatorColor = UIColor.blackColor()
+        self.tableView.separatorStyle = .SingleLine
     }
     func accountChooser() {
         
@@ -55,7 +57,7 @@ class HomeViewController: UIViewController, UITableViewDataSource
             
             if let accounts = accounts {
                 
-                let alertView = UIAlertController(title: "", message: "", preferredStyle: .ActionSheet)
+                let alertView = UIAlertController(title: "Accounts", message: "", preferredStyle: .ActionSheet)
                 
                 for account in accounts {
                     
@@ -119,6 +121,8 @@ extension HomeViewController
     func configureCellForIndexPath(indexPath: NSIndexPath) -> UITableViewCell
     {
         let tweetCell = self.tableView.dequeueReusableCellWithIdentifier("tableCell", forIndexPath: indexPath)
+//        tweetCell.contentView.layer.borderWidth = 1.0
+        
         let tweet = self.dataSource[indexPath.row]
         tweetCell.textLabel?.text = tweet.text
      
