@@ -12,12 +12,13 @@ typealias ProfileViewControllerCompletion = () -> ()
 
 class ProfileViewController: UIViewController, Identity {
     
+    @IBOutlet weak var image: UIImageView!
+    
     @IBOutlet weak var userName: UILabel!
     
     @IBOutlet weak var location: UILabel!
     
     var completion: ProfileViewControllerCompletion?
-
     
     class func identifier() -> String {
         return "ShowProfile"
@@ -25,16 +26,16 @@ class ProfileViewController: UIViewController, Identity {
    
     override func viewDidLoad() {
         super.viewDidLoad()
-       
         setUpLabels()
-        
     }
     
     
     func setUpLabels() {
        
         API.shared.getUserData { (user) -> () in
-            print("ViewDiDLoad")
+            
+            self.image.userInteractionEnabled = true
+            
             if let userName = user?.name {
             self.userName.text = userName
                 print(user?.profileImageUrl)
@@ -43,14 +44,14 @@ class ProfileViewController: UIViewController, Identity {
                 self.location.text = location
             }
             
-            
         }
-    
+            
     }
-
-    @IBAction func dismissButtonClicked(sender: AnyObject) {
-        print("Dismis")
+    
+       @IBAction func dismissButtonClicked(sender: AnyObject) {
         guard let completion = self.completion else {return}
         completion()
     }
+    
+    
 }

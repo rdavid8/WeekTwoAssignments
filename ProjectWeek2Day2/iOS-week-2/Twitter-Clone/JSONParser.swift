@@ -17,16 +17,16 @@ class JSONParser
         NSOperationQueue().addOperationWithBlock { () -> Void in
         
         do {
-            if let rootObject = try NSJSONSerialization.JSONObjectWithData(data, options: .MutableContainers)
+            if let rootObject = try NSJSONSerialization.JSONObjectWithData(data,
+                options: .MutableContainers)
                 as? [[String : AnyObject]] {
+                    print(rootObject.first)
             
                 var tweets = [Tweet]()
                     
                     for tweetJSON in rootObject {
                         
                         guard let tweet = self.tweetFromJSON(tweetJSON) else {return}
-                        
-                        
                         
                         if let orginal = self.originalTweet(tweetJSON) {
                         
@@ -35,8 +35,6 @@ class JSONParser
                         
                         tweets.append(tweet)
                     }
-                    
-                    //completion
                     
                     completion (success: true, tweets: tweets)
                     }
@@ -47,7 +45,7 @@ class JSONParser
             }
         }
     
-    //Mark helper Functions
+    //Mark: helper Functions
     
     class func userFromJSON(tweetJSON: [String: AnyObject]) -> User
     {

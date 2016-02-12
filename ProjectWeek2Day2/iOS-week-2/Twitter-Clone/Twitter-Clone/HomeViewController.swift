@@ -8,11 +8,9 @@
 
 import UIKit
 
-class HomeViewController: UIViewController, UITableViewDataSource
+class HomeViewController: UIViewController, UITableViewDataSource, UITableViewDelegate
 {
     @IBOutlet weak var tableView: UITableView!
-    
-//    var lazy viewController:
     
     var dataSource = [Tweet]() {
         didSet {
@@ -24,8 +22,6 @@ class HomeViewController: UIViewController, UITableViewDataSource
         super.viewDidLoad()
         self.setupTableView()
          self.accountChooser()
-        
-       
     }
     
     override func viewWillAppear(animated: Bool)
@@ -33,24 +29,32 @@ class HomeViewController: UIViewController, UITableViewDataSource
         super.viewWillAppear(animated)
         
     }
+    
     override func viewDidAppear(animated: Bool) {
         super.viewDidAppear(animated)
-       
-    }
-
-    override func didReceiveMemoryWarning()
-    {
-        super.didReceiveMemoryWarning()
     }
     
     func setupTableView()
     {
         self.tableView.dataSource = self
-        self.tableView.estimatedRowHeight = 200
+        self.tableView.estimatedRowHeight = 150
         self.tableView.rowHeight = UITableViewAutomaticDimension
         self.tableView.separatorColor = UIColor.blackColor()
         self.tableView.separatorStyle = .SingleLine
+        
+        self.tableView.registerNib(UINib(nibName: "TweetCell", bundle: nil), forCellReuseIdentifier: "tweetCell")
     }
+    
+    func profileImage(key: String, completion: (image: UIImage)->()) {
+        if let image = SimpleCache.shared.image(key) {
+            completion(image: image)
+            return
+        }
+        API.shared.getImage(key) { (image) -> () in
+            completion(image: image)
+        }
+    }
+    
     func accountChooser() {
         
         API.shared.login { (accounts) -> () in
@@ -64,19 +68,15 @@ class HomeViewController: UIViewController, UITableViewDataSource
                     let action = UIAlertAction(title: account.username, style: UIAlertActionStyle.Default, handler:{(action) in
                         
                         API.shared.account = account
-                        
                         self.update()
-                        
-                        })
+                    })
                     
                     alertView.addAction(action)
                 }
                 
-                
-                
                 self.presentViewController(alertView, animated: true, completion: nil)
             }
-    }
+        }
     }
     
     func update()
@@ -87,10 +87,11 @@ class HomeViewController: UIViewController, UITableViewDataSource
                 }
             })
         
-                    
+        
     }
-
+    
     override func prepareForSegue(segue: UIStoryboardSegue, sender: AnyObject?) {
+        
         if segue.identifier == ProfileViewController.identifier(){
             guard let profileViewController = segue.destinationViewController as? ProfileViewController else { fatalError("Something is messed up")}
             
@@ -109,7 +110,7 @@ class HomeViewController: UIViewController, UITableViewDataSource
             print(detailViewController.tweet?.user)
         }
     }
-
+    
 }
 
 
@@ -118,21 +119,23 @@ class HomeViewController: UIViewController, UITableViewDataSource
 extension HomeViewController
 {
     
-    func configureCellForIndexPath(indexPath: NSIndexPath) -> UITableViewCell
+    func configureCellForIndexPath(indexPath: NSIndexPath) -> TweetCell
     {
-        let tweetCell = self.tableView.dequeueReusableCellWithIdentifier("tableCell", forIndexPath: indexPath)
-//        tweetCell.contentView.layer.borderWidth = 1.0
-        
+        let tweetCell = self.tableView.dequeueReusableCellWithIdentifier("tweetCell", forIndexPath: indexPath) as! TweetCell
+
         let tweet = self.dataSource[indexPath.row]
-        tweetCell.textLabel?.text = tweet.text
+        
+        tweetCell.tweetLabel.text = tweet.text
+        self.profileImage((tweet.user?.profileImageUrl)!, completion: { (image) -> () in
+            tweetCell.imgView.image = image
+        })
      
         if let user = tweet.user{
-            tweetCell.detailTextLabel?.text = user.name
-            tweetCell.detailTextLabel?.textColor = UIColor.redColor()
+            tweetCell.userLabel.text = user.name
+            tweetCell.userLabel?.textColor = UIColor.redColor()
         }
         
         return tweetCell
-        
     }
     
     func tableView(tableView: UITableView, numberOfRowsInSection section: Int) -> Int
@@ -144,5 +147,12 @@ extension HomeViewController
     {
         return self.configureCellForIndexPath(indexPath)
     }
+    
+    func tableView(tableView: UITableView, didSelectRowAtIndexPath indexPath: NSIndexPath) {
+        print("Fire")
+        self.performSegueWithIdentifier(DetailViewController.identifier(), sender: self)
+        
+    }
+
 }
 
