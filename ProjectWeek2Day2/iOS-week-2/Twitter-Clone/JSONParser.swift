@@ -17,8 +17,10 @@ class JSONParser
         NSOperationQueue().addOperationWithBlock { () -> Void in
         
         do {
-            if let rootObject = try NSJSONSerialization.JSONObjectWithData(data, options: .MutableContainers)
+            if let rootObject = try NSJSONSerialization.JSONObjectWithData(data,
+                options: .MutableContainers)
                 as? [[String : AnyObject]] {
+                    print(rootObject.first)
             
                 var tweets = [Tweet]()
                     

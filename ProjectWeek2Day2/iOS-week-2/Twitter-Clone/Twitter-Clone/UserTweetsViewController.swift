@@ -64,14 +64,10 @@ extension UserTweetsViewController {
     {
         let tweetCell = self.tableView.dequeueReusableCellWithIdentifier("tweetCell", forIndexPath: indexPath) as! TweetCell
        
-        tweetCell.tweet = self.dataSource[indexPath.row]
+        tweet = self.dataSource[indexPath.row]
         
         tweetCell.tweetLabel.text = tweet!.text
-        
-//        if let user = tweet.user{
-//            tweetCell.userLabel.text = user.name
-//            tweetCell.userLabel?.textColor = UIColor.redColor()
-//        }
+        tweetCell.userLabel.text = tweet?.user?.name
         
         return tweetCell
         

@@ -51,7 +51,7 @@ class DetailViewController: UIViewController {
         }else {
             
             //Retweet
-            if let user = tweet?.user {
+            if let user = tweet?.originalTweet?.user {
                 retweetLabel.text = "RETWEET BY \(user.name)"
             }
             
@@ -82,7 +82,11 @@ class DetailViewController: UIViewController {
     override func prepareForSegue(segue: UIStoryboardSegue, sender: AnyObject?) {
         if segue.identifier == "PushUserTweets" {
             guard let destVc = segue.destinationViewController as? UserTweetsViewController else {fatalError("segueIssues")}
+            if self.tweet?.originalTweet == nil {
             destVc.tweet = self.tweet
+            }else {
+                destVc.tweet = self.tweet?.originalTweet
+            }
         }
     }
     
