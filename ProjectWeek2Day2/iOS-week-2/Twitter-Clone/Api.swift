@@ -21,7 +21,7 @@ class API
     {
         if let _ = self.account
         {
-            self.updateTimeline(completion)
+            self.updateTimeline("https://api.twitter.com/1.1/statuses/home_timeline.json", completion: completion)
         } else {
             self.login ({ (account) -> () in
                 if let account = self.account {
@@ -29,24 +29,44 @@ class API
                     API.shared.account = account
                     
                     //Make the tweets call
-                    self.updateTimeline(completion)
+                    self.updateTimeline("https://api.twitter.com/1.1/statuses/home_timeline.json", completion: completion)
                 } else { print("Account is nil.") }
                 
             })
         }
     }
     
-    //
+    func getSelectedUserTweets(userName: String, completion: (tweets: [Tweet]?)->()) {
+        self.updateTimeline("https://api.twitter.com/1.1/statuses/user_timeline.json?screen_name=\(userName)", completion: completion)
+    }
+
+       
     
-    private func updateTimeline(completion: (tweets: [Tweet]?) -> ())
+    func getImage(urlString: String, completion: (image: UIImage)->()){
+        
+        let queue = NSOperationQueue()
+        queue.addOperationWithBlock{() -> Void in
+            
+            guard let url = NSURL(string: urlString) else{return}
+            guard let data = NSData(contentsOfURL: url) else {return}
+            guard let image = UIImage(data: data) else {return}
+            
+
+        NSOperationQueue.mainQueue().addOperationWithBlock({ () -> Void in
+                completion(image: image)
+            })
+        }
+    }
+    
+    private func updateTimeline(url: String, completion: (tweets: [Tweet]?) -> ())
     {
-        let request = SLRequest(forServiceType: SLServiceTypeTwitter, requestMethod: .GET, URL: NSURL(string: "https://api.twitter.com/1.1/statuses/home_timeline.json"), parameters: nil)
+        let request = SLRequest(forServiceType: SLServiceTypeTwitter, requestMethod: .GET, URL: NSURL(string: url), parameters: nil)
         
         request.account = self.account
         request.performRequestWithHandler { (data, response, error) -> Void in
             
             if let _ = error {
-                print("ERROR: SLRequesttyoe .GET could not be completed")
+                print("ERROR: SLRequesttyoe .GET could not be completed\(url)")
                 NSOperationQueue.mainQueue().addOperationWithBlock { completion( tweets: nil) } ; return
                     completion(tweets: nil)
             }
@@ -66,6 +86,7 @@ class API
             }
         }
     }
+    
     
     func login(completion: (accounts: [ACAccount]?) -> ())
     {
@@ -96,13 +117,7 @@ class API
                     
                 }
             }
-            
-            
         }
-        
-        
-        
-        
         
     }
     
