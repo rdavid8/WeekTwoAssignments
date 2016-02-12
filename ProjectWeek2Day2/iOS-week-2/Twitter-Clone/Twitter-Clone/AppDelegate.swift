@@ -21,7 +21,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
 
     func setUPAppearance() {
     
-        UINavigationBar.appearance().barStyle = .Black
+        UINavigationBar.appearance().barStyle = .BlackTranslucent
         UINavigationBar.appearance().tintColor = UIColor.whiteColor()
         UINavigationBar.appearance().titleTextAttributes = [NSForegroundColorAttributeName : UIColor.whiteColor()]
         

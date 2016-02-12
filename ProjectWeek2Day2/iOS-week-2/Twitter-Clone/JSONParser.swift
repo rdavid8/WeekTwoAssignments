@@ -28,8 +28,6 @@ class JSONParser
                         
                         guard let tweet = self.tweetFromJSON(tweetJSON) else {return}
                         
-                        
-                        
                         if let orginal = self.originalTweet(tweetJSON) {
                         
                         tweet.originalTweet = orginal
@@ -37,8 +35,6 @@ class JSONParser
                         
                         tweets.append(tweet)
                     }
-                    
-                    //completion
                     
                     completion (success: true, tweets: tweets)
                     }
@@ -49,7 +45,7 @@ class JSONParser
             }
         }
     
-    //Mark helper Functions
+    //Mark: helper Functions
     
     class func userFromJSON(tweetJSON: [String: AnyObject]) -> User
     {

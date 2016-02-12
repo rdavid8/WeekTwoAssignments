@@ -40,8 +40,7 @@ class API
         self.updateTimeline("https://api.twitter.com/1.1/statuses/user_timeline.json?screen_name=\(userName)", completion: completion)
     }
 
-       
-    
+
     func getImage(urlString: String, completion: (image: UIImage)->()){
         
         let queue = NSOperationQueue()
@@ -51,7 +50,6 @@ class API
             guard let data = NSData(contentsOfURL: url) else {return}
             guard let image = UIImage(data: data) else {return}
             
-
         NSOperationQueue.mainQueue().addOperationWithBlock({ () -> Void in
                 completion(image: image)
             })
@@ -90,11 +88,8 @@ class API
     
     func login(completion: (accounts: [ACAccount]?) -> ())
     {
-        //creaate account store
-        
         let accountStore = ACAccountStore()
-        
-        //create account type
+       
         let accountType = accountStore.accountTypeWithAccountTypeIdentifier(ACAccountTypeIdentifierTwitter)
         
         accountStore.requestAccessToAccountsWithType(accountType, options: nil) { (granted, error) -> Void in

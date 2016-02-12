@@ -23,11 +23,10 @@ class SimpleCache {
     func setImage(image: UIImage, key: String) {
         
         if self.cache.count >= capacity {
-            guard let key = Array(self.cache.keys).last else {return} //Don't Understand
+            guard let key = Array(self.cache.keys).last else {return}
             self.cache[key] = nil
         }
-        
-        //set image for key
+
         self.cache[key] = image
     }
 }

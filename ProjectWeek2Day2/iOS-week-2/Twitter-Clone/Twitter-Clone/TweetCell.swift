@@ -45,16 +45,14 @@ class TweetCell: UITableViewCell {
 
     override func setSelected(selected: Bool, animated: Bool) {
         super.setSelected(selected, animated: animated)
-
-      
     }
     
     func setUpTweetCell() {
         self.imgView.layer.cornerRadius = 10.0
         self.imgView.clipsToBounds = true
         self.preservesSuperviewLayoutMargins = false
-        self.separatorInset = UIEdgeInsets(top: 0, left: 10.0, bottom: 0.0, right: 10.0)
+        self.contentView.layer.borderWidth = 2.0
+        self.separatorInset = UIEdgeInsets(top: 0, left: 5.0, bottom: 0.0, right: 5.0)
         self.layoutMargins = UIEdgeInsetsZero
     }
-
 }

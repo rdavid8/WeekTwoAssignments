@@ -12,8 +12,6 @@ class HomeViewController: UIViewController, UITableViewDataSource, UITableViewDe
 {
     @IBOutlet weak var tableView: UITableView!
     
-//    var lazy viewController:
-    
     var dataSource = [Tweet]() {
         didSet {
             self.tableView.reloadData()
@@ -24,8 +22,6 @@ class HomeViewController: UIViewController, UITableViewDataSource, UITableViewDe
         super.viewDidLoad()
         self.setupTableView()
          self.accountChooser()
-        
-       
     }
     
     override func viewWillAppear(animated: Bool)
@@ -33,21 +29,32 @@ class HomeViewController: UIViewController, UITableViewDataSource, UITableViewDe
         super.viewWillAppear(animated)
         
     }
+    
     override func viewDidAppear(animated: Bool) {
         super.viewDidAppear(animated)
-       
     }
     
     func setupTableView()
     {
         self.tableView.dataSource = self
-        self.tableView.estimatedRowHeight = 200
+        self.tableView.estimatedRowHeight = 150
         self.tableView.rowHeight = UITableViewAutomaticDimension
         self.tableView.separatorColor = UIColor.blackColor()
         self.tableView.separatorStyle = .SingleLine
         
         self.tableView.registerNib(UINib(nibName: "TweetCell", bundle: nil), forCellReuseIdentifier: "tweetCell")
     }
+    
+    func profileImage(key: String, completion: (image: UIImage)->()) {
+        if let image = SimpleCache.shared.image(key) {
+            completion(image: image)
+            return
+        }
+        API.shared.getImage(key) { (image) -> () in
+            completion(image: image)
+        }
+    }
+    
     func accountChooser() {
         
         API.shared.login { (accounts) -> () in
@@ -61,20 +68,15 @@ class HomeViewController: UIViewController, UITableViewDataSource, UITableViewDe
                     let action = UIAlertAction(title: account.username, style: UIAlertActionStyle.Default, handler:{(action) in
                         
                         API.shared.account = account
-                        
                         self.update()
-                        
-                        })
+                    })
                     
                     alertView.addAction(action)
                 }
                 
-                
-                
                 self.presentViewController(alertView, animated: true, completion: nil)
             }
-            
-    }
+        }
     }
     
     func update()
@@ -87,7 +89,7 @@ class HomeViewController: UIViewController, UITableViewDataSource, UITableViewDe
         
         
     }
-
+    
     override func prepareForSegue(segue: UIStoryboardSegue, sender: AnyObject?) {
         
         if segue.identifier == ProfileViewController.identifier(){
@@ -109,17 +111,6 @@ class HomeViewController: UIViewController, UITableViewDataSource, UITableViewDe
         }
     }
     
-    func profileImage(key: String, completion: (image: UIImage)->()) {
-        if let image = SimpleCache.shared.image(key) {
-            completion(image: image)
-            return
-        }
-        API.shared.getImage(key) { (image) -> () in
-            completion(image: image)
-        }
-    }
-
-    
 }
 
 
@@ -131,9 +122,8 @@ extension HomeViewController
     func configureCellForIndexPath(indexPath: NSIndexPath) -> TweetCell
     {
         let tweetCell = self.tableView.dequeueReusableCellWithIdentifier("tweetCell", forIndexPath: indexPath) as! TweetCell
-        
+
         let tweet = self.dataSource[indexPath.row]
-       
         
         tweetCell.tweetLabel.text = tweet.text
         self.profileImage((tweet.user?.profileImageUrl)!, completion: { (image) -> () in
@@ -146,7 +136,6 @@ extension HomeViewController
         }
         
         return tweetCell
-        
     }
     
     func tableView(tableView: UITableView, numberOfRowsInSection section: Int) -> Int

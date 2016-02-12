@@ -43,13 +43,6 @@ class UserTweetsViewController: UIViewController, UITableViewDelegate, UITableVi
             API.shared.getSelectedUserTweets(userName, completion: { (tweets) -> () in
                 if let tweets = tweets {
                     self.dataSource = tweets
-                    print("ViewdLoad DataSource: \(self.dataSource.count)")
-                    
-//                    for tweet in tweets {
-////                        print(tweet.user!.name)
-////                        print(tweet.text)
-//                    }
-                    
                 }
             })
         }
@@ -64,18 +57,13 @@ extension UserTweetsViewController {
     {
         let tweetCell = self.tableView.dequeueReusableCellWithIdentifier("tweetCell", forIndexPath: indexPath) as! TweetCell
        
-        tweet = self.dataSource[indexPath.row]
-        
-        tweetCell.tweetLabel.text = tweet!.text
-        tweetCell.userLabel.text = tweet?.user?.name
+        tweetCell.tweet = self.dataSource[indexPath.row]
         
         return tweetCell
-        
     }
     
 
     func tableView(tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        print("TableView Datasource: \(dataSource.count)")
         return dataSource.count
     }
     
